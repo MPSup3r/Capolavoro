@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galleria Immagini</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-bg: #0a0f2c;
+      --accent: #3e64ff;
+      --text: #d6e4ff;
+      --text-light: #9db4ff;
+      --highlight: #6b8cff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--main-bg);
+      color: var(--text);
+      padding: 80px 5vw 100px; /* spazio extra in basso per pulsante */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--accent);
+      font-size: 2rem;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .gallery-item {
+      width: 250px;
+      max-width: 90vw;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .caption {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--text-light);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 80vh;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+    }
+
+    .modal-caption {
+      color: var(--text-light);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .close,
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: var(--highlight);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      user-select: none;
+    }
+
+    .close {
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+    }
+
+    .prev {
+      left: 20px;
+    }
+
+    .next {
+      right: 20px;
+    }
+
+    /* Pulsante Home */
+    .home-button {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: var(--accent);
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      z-index: 999;
+      transition: background-color 0.3s;
+    }
+
+    .home-button:hover {
+      background-color: var(--highlight);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .gallery-item {
+        width: 100%;
+      }
+
+      .close,
+      .prev,
+      .next {
+        font-size: 1.8rem;
+      }
+
+      .home-button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+      }
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--main-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader {
+      border: 6px solid #ccc;
+      border-top: 6px solid var(--accent);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <h1>La nostra Galleria</h1>
+  <div class="gallery">
+    <div class="gallery-item" onclick="openModal(0)">
+      <img src="immagini/menu.png" alt="Menu di gioco">
+      <div class="caption">Menu di gioco</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(1)">
+      <img src="immagini/opzioni1.png" alt="Opzioni di gioco">
+      <div class="caption">Opzioni di gioco</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(2)">
+      <img src="immagini/opzioni2.png" alt="Regolazione dell'audio">
+      <div class="caption">Regolazione dell'audio</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(3)">
+      <img src="immagini/opzioni3.png" alt="Lista dei comandi">
+      <div class="caption">Lista dei comandi</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(4)">
+      <img src="immagini/inventario.png" alt="Inventario">
+      <div class="caption">Inventario</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(5)">
+      <img src="immagini/azione.png" alt="Combattimento">
+      <div class="caption">Combattimento</div>
+    </div>
+    
+    <div class="gallery-item" onclick="openModal(6)">
+      <img src="immagini/vecchietto.png" alt="Npc">
+      <div class="caption">Npc</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(7)">
+      <img src="immagini/cassa.png" alt="Caccia al tesoro">
+      <div class="caption">Caccia al tesoro</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(8)">
+      <img src="immagini/morte.png" alt="Morte">
+      <div class="caption">Morte</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(9)">
+      <img src="immagini/venditore1.png" alt="Venditore">
+      <div class="caption">Venditore</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(10)">
+      <img src="immagini/venditore2.png" alt="Acquisto">
+      <div class="caption">Acquisto</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(11)">
+      <img src="immagini/venditore3.png" alt="Vendita">
+      <div class="caption">Vendita</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(12)">
+      <img src="immagini/fireball.png" alt="Abilità di lancio">
+      <div class="caption">Abilità di lancio</div>
+    </div>
+    <div class="gallery-item" onclick="openModal(14)">
+      <img src="immagini/PathFinding.png" alt="Algoritmo A*">
+      <div class="caption">Algoritmo A*</div>
+    </div>
+    <!-- Aggiungi altre immagini qui -->
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <button class="close" onclick="closeModal()">×</button>
+    <button class="prev" onclick="changeSlide(-1)">‹</button>
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="">
+      <div class="modal-caption" id="modal-caption"></div>
+    </div>
+    <button class="next" onclick="changeSlide(1)">›</button>
+  </div>
+
+  <!-- Pulsante Home -->
+  <a href="home.html" class="home-button">Home</a>
+
+  <script>
+    const images = [
+  { src: 'immagini/menu.png', caption: 'Menu di gioco' },
+  { src: 'immagini/opzioni1.png', caption: 'Opzioni di gioco' },
+  { src: 'immagini/opzioni2.png', caption: 'Regolazione dell\'audio' },
+  { src: 'immagini/opzioni3.png', caption: 'Lista dei comandi' },
+  { src: 'immagini/inventario.png', caption: 'Inventario' },
+  { src: 'immagini/azione.png', caption: 'Combattimento' },
+  { src: 'immagini/fireball.png', caption: 'Abilità di lancio' },
+  { src: 'immagini/vecchietto.png', caption: 'Npc' },
+  { src: 'immagini/cassa.png', caption: 'Caccia al tesoro' },
+  { src: 'immagini/morte.png', caption: 'Morte' },
+  { src: 'immagini/venditore1.png', caption: 'Venditore' },
+  { src: 'immagini/venditore2.png', caption: 'Acquisto' },
+  { src: 'immagini/venditore3.png', caption: 'Vendita' },
+  { src: 'immagini/PathFinding.png', caption: 'Algoritmo A*' }
+];
+
+    let currentIndex = 0;
+
+    function openModal(index) {
+      currentIndex = index;
+      updateModal();
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function changeSlide(direction) {
+      currentIndex = (currentIndex + direction + images.length) % images.length;
+      updateModal();
+    }
+
+    function updateModal() {
+      const img = document.getElementById("modal-img");
+      const caption = document.getElementById("modal-caption");
+      img.src = images[currentIndex].src;
+      caption.textContent = images[currentIndex].caption;
+    }
+
+    window.addEventListener("load", function () {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.style.opacity = "0";
+        preloader.style.pointerEvents = "none";
+        setTimeout(() => preloader.remove(), 500);
+      }, 1500); // durata minima del preloader
+    });
+  </script>
+</body>
+</html>
