@@ -202,6 +202,31 @@
         transform: rotate(360deg);
       }
     }
+
+  .zoomed {  
+    transform: scale(1.8);
+    transition: transform 0.3s ease;
+    cursor: zoom-out;
+  }
+
+  #zoom-button {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    background-color: var(--accent);
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    z-index: 1001;
+    transition: background-color 0.3s;
+  }
+
+  #zoom-button:hover {
+    background-color: var(--highlight);
+  }
   </style>
 </head>
 <body>
@@ -281,61 +306,98 @@
       <div class="modal-caption" id="modal-caption"></div>
     </div>
     <button class="next" onclick="changeSlide(1)">›</button>
+    <button id="zoom-button" onclick="toggleZoom()">Zoom</button>
   </div>
 
   <!-- Pulsante Home -->
   <a href="index.html" class="home-button">Home</a>
 
   <script>
-    const images = [
-  { src: 'immagini/menu.png', caption: 'Menu di gioco' },
-  { src: 'immagini/opzioni1.png', caption: 'Opzioni di gioco' },
-  { src: 'immagini/opzioni2.png', caption: 'Regolazione dell\'audio' },
-  { src: 'immagini/opzioni3.png', caption: 'Lista dei comandi' },
-  { src: 'immagini/inventario.png', caption: 'Inventario' },
-  { src: 'immagini/azione.png', caption: 'Combattimento' },
-  { src: 'immagini/fireball.png', caption: 'Abilità di lancio' },
-  { src: 'immagini/vecchietto.png', caption: 'Npc' },
-  { src: 'immagini/cassa.png', caption: 'Caccia al tesoro' },
-  { src: 'immagini/morte.png', caption: 'Morte' },
-  { src: 'immagini/venditore1.png', caption: 'Venditore' },
-  { src: 'immagini/venditore2.png', caption: 'Acquisto' },
-  { src: 'immagini/venditore3.png', caption: 'Vendita' },
-  { src: 'immagini/PathFinding.png', caption: 'Algoritmo A*' }
-];
+  const images = [
+    { src: 'immagini/menu.png', caption: 'Menu di gioco' },
+    { src: 'immagini/opzioni1.png', caption: 'Opzioni di gioco' },
+    { src: 'immagini/opzioni2.png', caption: 'Regolazione dell\'audio' },
+    { src: 'immagini/opzioni3.png', caption: 'Lista dei comandi' },
+    { src: 'immagini/inventario.png', caption: 'Inventario' },
+    { src: 'immagini/azione.png', caption: 'Combattimento' },
+    { src: 'immagini/fireball.png', caption: 'Abilità di lancio' },
+    { src: 'immagini/vecchietto.png', caption: 'Npc' },
+    { src: 'immagini/cassa.png', caption: 'Caccia al tesoro' },
+    { src: 'immagini/morte.png', caption: 'Morte' },
+    { src: 'immagini/venditore1.png', caption: 'Venditore' },
+    { src: 'immagini/venditore2.png', caption: 'Acquisto' },
+    { src: 'immagini/venditore3.png', caption: 'Vendita' },
+    { src: 'immagini/PathFinding.png', caption: 'Algoritmo A*' }
+  ];
 
-    let currentIndex = 0;
+  let currentIndex = 0;
+  let isZoomed = false;
 
-    function openModal(index) {
-      currentIndex = index;
-      updateModal();
-      document.getElementById("modal").style.display = "flex";
+  function openModal(index) {
+    currentIndex = index;
+    updateModal();
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+    removeZoom(); // reset zoom all’uscita
+  }
+
+  function changeSlide(direction) {
+    currentIndex = (currentIndex + direction + images.length) % images.length;
+    updateModal();
+  }
+
+  function updateModal() {
+    const img = document.getElementById("modal-img");
+    const caption = document.getElementById("modal-caption");
+    removeZoom();
+    img.src = images[currentIndex].src;
+    caption.textContent = images[currentIndex].caption;
+  }
+
+  function toggleZoom() {
+    const img = document.getElementById("modal-img");
+    isZoomed = !isZoomed;
+    img.classList.toggle("zoomed");
+  }
+
+  function removeZoom() {
+    const img = document.getElementById("modal-img");
+    isZoomed = false;
+    img.classList.remove("zoomed");
+  }
+
+  // Tastiera: frecce e zoom via Ctrl+/Ctrl-
+  window.addEventListener("keydown", function (e) {
+    const modalOpen = document.getElementById("modal").style.display === "flex";
+    if (!modalOpen) return;
+
+    if (e.key === "ArrowRight") {
+      changeSlide(1);
+    } else if (e.key === "ArrowLeft") {
+      changeSlide(-1);
+    } else if ((e.ctrlKey || e.metaKey) && (e.key === "+" || e.key === "=")) {
+      e.preventDefault();
+      if (!isZoomed) toggleZoom();
+    } else if ((e.ctrlKey || e.metaKey) && e.key === "-") {
+      e.preventDefault();
+      if (isZoomed) toggleZoom();
+    } else if (e.key === "Escape") {
+      closeModal();
     }
+  });
 
-    function closeModal() {
-      document.getElementById("modal").style.display = "none";
-    }
+  window.addEventListener("load", function () {
+    const preloader = document.getElementById("preloader");
+    setTimeout(() => {
+      preloader.style.opacity = "0";
+      preloader.style.pointerEvents = "none";
+      setTimeout(() => preloader.remove(), 500);
+    }, 1500);
+  });
+</script>
 
-    function changeSlide(direction) {
-      currentIndex = (currentIndex + direction + images.length) % images.length;
-      updateModal();
-    }
-
-    function updateModal() {
-      const img = document.getElementById("modal-img");
-      const caption = document.getElementById("modal-caption");
-      img.src = images[currentIndex].src;
-      caption.textContent = images[currentIndex].caption;
-    }
-
-    window.addEventListener("load", function () {
-      const preloader = document.getElementById("preloader");
-      setTimeout(() => {
-        preloader.style.opacity = "0";
-        preloader.style.pointerEvents = "none";
-        setTimeout(() => preloader.remove(), 500);
-      }, 1500); // durata minima del preloader
-    });
-  </script>
 </body>
 </html>
