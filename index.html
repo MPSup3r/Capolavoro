@@ -217,9 +217,9 @@
       height: 100%;
       object-fit: cover;
       z-index: -1;
-      opacity: 0.25; /* Puoi regolare l'opacità */
+      opacity: 0.25;
       pointer-events: none;
-      }
+    }
 
     header {
       position: relative; /* Per posizionare correttamente il video */
@@ -240,14 +240,42 @@
   <a href="immagini.html">Immagini</a>
 </nav>
 
-  <header id="inizio">
-  <video autoplay muted loop playsinline class="background-video">
+  <header id="inizio" style="position: relative; height: 100vh; overflow: hidden;">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;         /* ora sopra lo sfondo */
+      opacity: 0.75;
+      pointer-events: none;
+    "
+  >
     <source src="gioco_2D/Trailer_alpha_sito.mp4" type="video/mp4">
-    Il tuo browser non supporta il tag video.
+    <source src="gioco_2D/Trailer_alpha_sito.webm" type="video/webm">
+    <p>
+      Il tuo browser non supporta il video.
+      <a href="gioco_2D/Trailer_alpha_sito.mp4">Scarica qui</a>.
+    </p>
   </video>
-  <h1>Gioco 2D in Java<br>Un'avventura nata dalla passione</h1>
-</header>
 
+  <h1 style="position: relative; z-index: 1; color: #d3d1d1;
+           text-shadow: 
+             -2px -2px 0 #000,  
+              2px -2px 0 #000,  
+             -2px  2px 0 #000,  
+              2px  2px 0 #000;">
+  Gioco 2D in Java<br>Un'avventura nata dalla passione
+</h1>
+</header>
   <section id="inizio-storia">
     <h2>Come tutto è iniziato</h2>
     <p>
