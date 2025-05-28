@@ -210,7 +210,23 @@
         font-size: 2rem;
       }
     }
-  </style>
+    .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.25; /* Puoi regolare l'opacità */
+    pointer-events: none;
+  }
+
+  header {
+    position: relative; /* Per posizionare correttamente il video */
+    overflow: hidden;
+  }
+</style>
 </head>
 <body>
   <nav>
@@ -224,8 +240,12 @@
 </nav>
 
   <header id="inizio">
-    <h1>Gioco 2D in Java<br>Un'avventura nata dalla passione</h1>
-  </header>
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="gioco_2D/Trailer_alpha_sito.mp4" type="video/mp4">
+    Il tuo browser non supporta il tag video.
+  </video>
+  <h1>Gioco 2D in Java<br>Un'avventura nata dalla passione</h1>
+</header>
 
   <section id="inizio-storia">
     <h2>Come tutto è iniziato</h2>
