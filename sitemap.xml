@@ -2,15 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://esempio.com/</loc>
+    <loc>https://mpsup3r.github.io/capolavoro/</loc>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://esempio.com/immagini.html</loc>
+    <loc>https://mpsup3r.github.io/capolavoro/immagini.html</loc>
     <priority>0.8</priority>
   </url>
 
-  <!-- Puoi aggiungere altre pagine se crei nuove sezioni dedicate -->
-
 </urlset>
+
