@@ -360,7 +360,7 @@
 
     function updateActiveLink() {
       let index = sections.length;
-      while (--index && window.scrollY + 100 < sections[index].offsetTop) {}
+      while (--index && window.scrollY + 800 < sections[index].offsetTop) {}
       navLinks.forEach(link => link.classList.remove('active'));
       navLinks[index].classList.add('active');
     }
@@ -375,3 +375,4 @@
   </script>
 </body>
 </html>
+
