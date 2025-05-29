@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -258,10 +258,7 @@
   <div class="gallery">
     <!-- Inserisci qui gli elementi della galleria -->
     <!-- Esempio: -->
-    <div class="gallery-item" onclick="openModal(0)">
-      <img src="immagini/menu.png" alt="Menu di gioco">
-      <div class="caption">Menu di gioco</div>
-    </div>
+  <div class="gallery" id="gallery"></div>
     <!-- Aggiungi altri item come da tuo codice -->
   </div>
 
@@ -364,6 +361,27 @@
         setTimeout(() => preloader.remove(), 500);
       }, 1500);
     });
+    // Genera la galleria dinamicamente
+const galleryContainer = document.getElementById("gallery");
+
+images.forEach((item, index) => {
+  const itemDiv = document.createElement("div");
+  itemDiv.className = "gallery-item";
+  itemDiv.onclick = () => openModal(index);
+
+  const img = document.createElement("img");
+  img.src = item.src;
+  img.alt = item.caption;
+
+  const caption = document.createElement("div");
+  caption.className = "caption";
+  caption.textContent = item.caption;
+
+  itemDiv.appendChild(img);
+  itemDiv.appendChild(caption);
+  galleryContainer.appendChild(itemDiv);
+});
+
   </script>
 </body>
 </html>
