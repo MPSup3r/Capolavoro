@@ -24,11 +24,10 @@
     body {
       background-color: var(--main-bg);
       color: var(--text);
-      padding: 80px 5vw 100px; /* spazio extra in basso per pulsante */
+      padding: 80px 5vw 100px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
     }
 
     h1 {
@@ -105,8 +104,6 @@
     .prev,
     .next {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       font-size: 2rem;
       color: var(--highlight);
       background: none;
@@ -114,20 +111,26 @@
       cursor: pointer;
       padding: 10px;
       user-select: none;
+      z-index: 1001;
     }
 
     .close {
       top: 20px;
       right: 30px;
       font-size: 2.5rem;
+      transform: none;
     }
 
     .prev {
+      top: 50%;
       left: 20px;
+      transform: translateY(-50%);
     }
 
     .next {
+      top: 50%;
       right: 20px;
+      transform: translateY(-50%);
     }
 
     /* Pulsante Home */
@@ -150,27 +153,6 @@
 
     .home-button:hover {
       background-color: var(--highlight);
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .gallery-item {
-        width: 100%;
-      }
-
-      .close,
-      .prev,
-      .next {
-        font-size: 1.8rem;
-      }
-
-      .home-button {
-        font-size: 0.9rem;
-        padding: 10px 20px;
-      }
     }
 
     /* Preloader */
@@ -203,30 +185,67 @@
       }
     }
 
-  .zoomed {  
-    transform: scale(1.8);
-    transition: transform 0.3s ease;
-    cursor: zoom-out;
-  }
+    .zoomed {
+      transform: scale(1.8);
+      transition: transform 0.3s ease;
+      cursor: zoom-out;
+    }
 
-  #zoom-button {
-    position: absolute;
-    bottom: 20px;
-    right: 30px;
-    background-color: var(--accent);
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    z-index: 1001;
-    transition: background-color 0.3s;
-  }
+    #zoom-button {
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      background-color: var(--accent);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+      transition: background-color 0.3s;
+    }
 
-  #zoom-button:hover {
-    background-color: var(--highlight);
-  }
+    #zoom-button:hover {
+      background-color: var(--highlight);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .gallery-item {
+        width: 100%;
+      }
+
+      .close,
+      .prev,
+      .next {
+        font-size: 1.8rem;
+        padding: 8px;
+      }
+
+      .prev {
+        left: 10px;
+      }
+
+      .next {
+        right: 10px;
+      }
+
+      .home-button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+      }
+
+      #zoom-button {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+        bottom: 70px;
+        right: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -237,64 +256,13 @@
 
   <h1>La nostra Galleria</h1>
   <div class="gallery">
+    <!-- Inserisci qui gli elementi della galleria -->
+    <!-- Esempio: -->
     <div class="gallery-item" onclick="openModal(0)">
       <img src="immagini/menu.png" alt="Menu di gioco">
       <div class="caption">Menu di gioco</div>
     </div>
-    <div class="gallery-item" onclick="openModal(1)">
-      <img src="immagini/opzioni1.png" alt="Opzioni di gioco">
-      <div class="caption">Opzioni di gioco</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(2)">
-      <img src="immagini/opzioni2.png" alt="Regolazione dell'audio">
-      <div class="caption">Regolazione dell'audio</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(3)">
-      <img src="immagini/opzioni3.png" alt="Lista dei comandi">
-      <div class="caption">Lista dei comandi</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(4)">
-      <img src="immagini/inventario.png" alt="Inventario">
-      <div class="caption">Inventario</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(5)">
-      <img src="immagini/azione.png" alt="Combattimento">
-      <div class="caption">Combattimento</div>
-    </div>
-    
-    <div class="gallery-item" onclick="openModal(6)">
-      <img src="immagini/vecchietto.png" alt="Npc">
-      <div class="caption">Npc</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(7)">
-      <img src="immagini/cassa.png" alt="Caccia al tesoro">
-      <div class="caption">Caccia al tesoro</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(8)">
-      <img src="immagini/morte.png" alt="Morte">
-      <div class="caption">Morte</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(9)">
-      <img src="immagini/venditore1.png" alt="Venditore">
-      <div class="caption">Venditore</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(10)">
-      <img src="immagini/venditore2.png" alt="Acquisto">
-      <div class="caption">Acquisto</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(11)">
-      <img src="immagini/venditore3.png" alt="Vendita">
-      <div class="caption">Vendita</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(12)">
-      <img src="immagini/fireball.png" alt="Abilità di lancio">
-      <div class="caption">Abilità di lancio</div>
-    </div>
-    <div class="gallery-item" onclick="openModal(14)">
-      <img src="immagini/PathFinding.png" alt="Algoritmo A*">
-      <div class="caption">Algoritmo A*</div>
-    </div>
-    <!-- Aggiungi altre immagini qui -->
+    <!-- Aggiungi altri item come da tuo codice -->
   </div>
 
   <!-- Modal -->
@@ -313,91 +281,90 @@
   <a href="index.html" class="home-button">Home</a>
 
   <script>
-  const images = [
-    { src: 'immagini/menu.png', caption: 'Menu di gioco' },
-    { src: 'immagini/opzioni1.png', caption: 'Opzioni di gioco' },
-    { src: 'immagini/opzioni2.png', caption: 'Regolazione dell\'audio' },
-    { src: 'immagini/opzioni3.png', caption: 'Lista dei comandi' },
-    { src: 'immagini/inventario.png', caption: 'Inventario' },
-    { src: 'immagini/azione.png', caption: 'Combattimento' },
-    { src: 'immagini/fireball.png', caption: 'Abilità di lancio' },
-    { src: 'immagini/vecchietto.png', caption: 'Npc' },
-    { src: 'immagini/cassa.png', caption: 'Caccia al tesoro' },
-    { src: 'immagini/morte.png', caption: 'Morte' },
-    { src: 'immagini/venditore1.png', caption: 'Venditore' },
-    { src: 'immagini/venditore2.png', caption: 'Acquisto' },
-    { src: 'immagini/venditore3.png', caption: 'Vendita' },
-    { src: 'immagini/PathFinding.png', caption: 'Algoritmo A*' }
-  ];
+    const images = [
+      { src: 'immagini/menu.png', caption: 'Menu di gioco' },
+      { src: 'immagini/opzioni1.png', caption: 'Opzioni di gioco' },
+      { src: 'immagini/opzioni2.png', caption: "Regolazione dell'audio" },
+      { src: 'immagini/opzioni3.png', caption: "Lista dei comandi" },
+      { src: 'immagini/inventario.png', caption: "Inventario" },
+      { src: 'immagini/azione.png', caption: "Combattimento" },
+      { src: 'immagini/fireball.png', caption: "Abilità di lancio" },
+      { src: 'immagini/vecchietto.png', caption: "Npc" },
+      { src: 'immagini/cassa.png', caption: "Caccia al tesoro" },
+      { src: 'immagini/morte.png', caption: "Morte" },
+      { src: 'immagini/venditore1.png', caption: "Venditore" },
+      { src: 'immagini/venditore2.png', caption: "Acquisto" },
+      { src: 'immagini/venditore3.png', caption: "Vendita" },
+      { src: 'immagini/PathFinding.png', caption: "Algoritmo A*" }
+    ];
 
-  let currentIndex = 0;
-  let isZoomed = false;
+    let currentIndex = 0;
+    let isZoomed = false;
 
-  function openModal(index) {
-    currentIndex = index;
-    updateModal();
-    document.getElementById("modal").style.display = "flex";
-  }
-
-  function closeModal() {
-    document.getElementById("modal").style.display = "none";
-    removeZoom(); // reset zoom all’uscita
-  }
-
-  function changeSlide(direction) {
-    currentIndex = (currentIndex + direction + images.length) % images.length;
-    updateModal();
-  }
-
-  function updateModal() {
-    const img = document.getElementById("modal-img");
-    const caption = document.getElementById("modal-caption");
-    removeZoom();
-    img.src = images[currentIndex].src;
-    caption.textContent = images[currentIndex].caption;
-  }
-
-  function toggleZoom() {
-    const img = document.getElementById("modal-img");
-    isZoomed = !isZoomed;
-    img.classList.toggle("zoomed");
-  }
-
-  function removeZoom() {
-    const img = document.getElementById("modal-img");
-    isZoomed = false;
-    img.classList.remove("zoomed");
-  }
-
-  // Tastiera: frecce e zoom via Ctrl+/Ctrl-
-  window.addEventListener("keydown", function (e) {
-    const modalOpen = document.getElementById("modal").style.display === "flex";
-    if (!modalOpen) return;
-
-    if (e.key === "ArrowRight") {
-      changeSlide(1);
-    } else if (e.key === "ArrowLeft") {
-      changeSlide(-1);
-    } else if ((e.ctrlKey || e.metaKey) && (e.key === "+" || e.key === "=")) {
-      e.preventDefault();
-      if (!isZoomed) toggleZoom();
-    } else if ((e.ctrlKey || e.metaKey) && e.key === "-") {
-      e.preventDefault();
-      if (isZoomed) toggleZoom();
-    } else if (e.key === "Escape") {
-      closeModal();
+    function openModal(index) {
+      currentIndex = index;
+      updateModal();
+      document.getElementById("modal").style.display = "flex";
     }
-  });
 
-  window.addEventListener("load", function () {
-    const preloader = document.getElementById("preloader");
-    setTimeout(() => {
-      preloader.style.opacity = "0";
-      preloader.style.pointerEvents = "none";
-      setTimeout(() => preloader.remove(), 500);
-    }, 1500);
-  });
-</script>
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+      removeZoom();
+    }
 
+    function changeSlide(direction) {
+      currentIndex = (currentIndex + direction + images.length) % images.length;
+      updateModal();
+    }
+
+    function updateModal() {
+      const img = document.getElementById("modal-img");
+      const caption = document.getElementById("modal-caption");
+      removeZoom();
+      img.src = images[currentIndex].src;
+      caption.textContent = images[currentIndex].caption;
+    }
+
+    function toggleZoom() {
+      const img = document.getElementById("modal-img");
+      isZoomed = !isZoomed;
+      img.classList.toggle("zoomed");
+    }
+
+    function removeZoom() {
+      const img = document.getElementById("modal-img");
+      isZoomed = false;
+      img.classList.remove("zoomed");
+    }
+
+    window.addEventListener("keydown", function (e) {
+      const modalOpen = document.getElementById("modal").style.display === "flex";
+      if (!modalOpen) return;
+
+      if (e.key === "ArrowRight") {
+        changeSlide(1);
+      } else if (e.key === "ArrowLeft") {
+        changeSlide(-1);
+      } else if ((e.ctrlKey || e.metaKey) && (e.key === "+" || e.key === "=")) {
+        e.preventDefault();
+        if (!isZoomed) toggleZoom();
+      } else if ((e.ctrlKey || e.metaKey) && e.key === "-") {
+        e.preventDefault();
+        if (isZoomed) toggleZoom();
+      } else if (e.key === "Escape") {
+        closeModal();
+      }
+    });
+
+    window.addEventListener("load", function () {
+      const preloader = document.getElementById("preloader");
+      setTimeout(() => {
+        preloader.style.opacity = "0";
+        preloader.style.pointerEvents = "none";
+        setTimeout(() => preloader.remove(), 500);
+      }, 1500);
+    });
+  </script>
 </body>
 </html>
+
