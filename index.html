@@ -29,15 +29,208 @@
 <link rel="icon" href="logos/site_logo.png" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8" />
-<title>Gioco 2D in Java - Presentazione</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-<style>
-/* [STILI OMITTI PER BREVITÀ – RESTANO UGUALI] */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gioco 2D in Java - Presentazione</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ⬇️ ANIMAZIONE HEADER */
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: var(--accent);
+      animation: fadeSlideIn 1.5s ease-out forwards;
+    }
+
+    /* ⬇️ MARGINE EXTRA SOTTO IL TITOLO "Chi siamo" */
+    .profile-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 40px; /* <<< aggiunto */
+    }
+    :root {
+      --main-bg: #0a0f2c;
+      --accent: #3e64ff;
+      --text: #d6e4ff;
+      --text-light: #9db4ff;
+      --highlight: #6b8cff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--main-bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      padding: 20px;
+      background-color: rgba(10, 15, 44, 0.95);
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--accent);
+    }
+
+    header {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: radial-gradient(circle at top, #14206b, #0a0f2c);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      color: var(--accent);
+    }
+
+    section {
+      padding: 100px 10vw 60px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--highlight);
+      margin-bottom: 20px;
+    }
+
+    p, ul {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-light);
+    }
+
+    ul li {
+      margin-bottom: 10px;
+    }
+
+    .team-list li::before {
+      color: var(--accent);
+    }
+
+    .profile-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .profile-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+    }
+
+    .profile-card img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .profile-card h3 {
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+
+    .profile-card .title {
+      font-size: 0.9rem;
+      color: var(--highlight);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-light);
+      background-color: #0a0f2c;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+      }
+
+      .profile-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      section {
+        padding: 100px 5vw 60px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+      .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    header {
+      position: relative; /* Per posizionare correttamente il video */
+      overflow: hidden;
+    }
+ }
+    
 </style>
 </head>
 <body>
-<nav>
+  <nav>
   <a href="#inizio" class="active">Home</a>
   <a href="#inizio-storia">Inizio</a>
   <a href="#sviluppo">Sviluppo</a>
@@ -46,68 +239,139 @@
   <a href="#chisiamo">Chi siamo</a>
   <a href="immagini.html">Immagini</a>
 </nav>
-<header id="inizio">
-  <!-- Video header [OMESSO PER BREVITÀ] -->
-  <h1>Gioco 2D in Java<br>Un'avventura nata dalla passione</h1>
+
+  <header id="inizio" style="position: relative; height: 100vh; overflow: hidden;">
+  <video
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    style="
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;         /* ora sopra lo sfondo */
+      opacity: 0.75;
+      pointer-events: none;
+    "
+  >
+    <source src="gioco_2D/Trailer_alpha_sito.mp4" type="video/mp4">
+    <source src="gioco_2D/Trailer_alpha_sito.webm" type="video/webm">
+    <p>
+      Il tuo browser non supporta il video.
+      <a href="gioco_2D/Trailer_alpha_sito.mp4">Scarica qui</a>.
+    </p>
+  </video>
+
+  <h1 style="position: relative; z-index: 1; color: #d3d1d1;
+           text-shadow: 
+             -2px -2px 0 #000,  
+              2px -2px 0 #000,  
+             -2px  2px 0 #000,  
+              2px  2px 0 #000;">
+  Gioco 2D in Java<br>Un'avventura nata dalla passione
+</h1>
 </header>
-<section id="inizio-storia">
-  <h2>Come tutto è iniziato</h2>
-  <p>Circa un anno fa, io e un mio compagno abbiamo deciso di intraprendere un'avventura che unisse la nostra passione per la programmazione e per i videogiochi. [...]</p>
-</section>
-<section id="sviluppo">
-  <h2>Lo sviluppo del progetto</h2>
-  <p>Il progetto si è sviluppato interamente al di fuori dell’ambiente scolastico, in completa autonomia. [...]</p>
-</section>
-<section id="team">
-  <h2>La nascita del team</h2>
-  <p>Realizzare un videogioco completo richiede molte competenze diverse [...]</p>
-  <ul class="team-list">
-    <li>Game Developer</li>
-    <li>Web Developer</li>
-    <li>Pixel Art Artist</li>
-    <li>GUI Designer</li>
-    <li>Web GUI Designer</li>
-    <li>Musician</li>
-    <li>Marketing Manager</li>
-    <li>Social Media Manager (in arrivo)</li>
-  </ul>
-</section>
-<section id="competenze">
-  <h2>Competenze acquisite</h2>
-  <ul>
-    <li>Capacità di autoapprendimento e problem solving</li>
-    <li>Utilizzo avanzato dell’ambiente di sviluppo Eclipse</li>
-    <li>Creazione e gestione di finestre e componenti grafici in Java</li>
-    <li>Lettura e gestione degli input da tastiera</li>
-    <li>Costruzione di classi personalizzate e strutture dati</li>
-    <li>Programmazione multi-thread per gestire più processi in parallelo</li>
-    <li>Integrazione di risorse multimediali come immagini e suoni</li>
-    <li>Implementazione di algoritmi di pathfinding come l’A*</li>
-    <li>Esperienza in marketing e gestione imprenditoriale di un progetto</li>
-  </ul>
-</section>
-<section id="chisiamo">
-  <h2>Chi siamo</h2>
-  <div class="profile-container">
-    <div class="profile-card">
-      <img src="profili/Mia_pfp.png" alt="Manuel Prati">
-      <h3>Manuel Prati</h3>
-      <div class="title">C.E.O.</div>
-      <p>Sono un programmatore, videogiocatore e nerd fino al midollo.<br>"A guardarsi dietro nessuno è veramente felice"<br>-Sakata Gintoki</p>
+  <section id="inizio-storia">
+    <h2>Come tutto è iniziato</h2>
+    <p>
+      Circa un anno fa, io e un mio compagno abbiamo deciso di intraprendere un'avventura che unisse la nostra passione per la programmazione e per i videogiochi. Abbiamo iniziato seguendo i tutorial di <a href="https://www.youtube.com/@RyiSnow" target="_blank" style="color: var(--highlight); font-weight: bold;">RyiSnow</a>, uno YouTuber che ci ha insegnato le basi. Da lì, abbiamo cominciato ad aggiungere idee originali per creare un progetto completamente nostro, con un obiettivo ben chiaro: pubblicare un gioco completo e coinvolgente.
+    </p>
+  </section>
+
+  <section id="sviluppo">
+    <h2>Lo sviluppo del progetto</h2>
+    <p>
+      Il progetto si è sviluppato interamente al di fuori dell’ambiente scolastico, in completa autonomia. Dopo una fase iniziale di apprendimento, abbiamo iniziato a mettere in pratica ciò che avevamo imparato. Abbiamo elaborato una roadmap dettagliata per guidare lo sviluppo e, man mano che il gioco cresceva in complessità, ci siamo resi conto che era il momento giusto per formare un team e portare il progetto a un livello superiore.
+    </p>
+  </section>
+
+  <section id="team">
+    <h2>La nascita del team</h2>
+    <p>
+      Realizzare un videogioco completo richiede molte competenze diverse, dalla programmazione alla grafica, dalla musica al marketing. Per questo motivo abbiamo deciso di coinvolgere altri amici e programmatori alle prime armi, con la promessa di formarli personalmente. Abbiamo creato un ambiente di lavoro collaborativo tramite <strong>Notion</strong>, organizzando database e spazi dedicati ai diversi ruoli del team.
+    </p>
+    <ul class="team-list">
+      <li>Game Developer</li>
+      <li>Web Developer</li>
+      <li>Pixel Art Artist</li>
+      <li>GUI Designer</li>
+      <li>Web GUI Designer</li>
+      <li>Musician</li>
+      <li>Marketing Manager</li>
+      <li>Social Media Manager (in arrivo)</li>
+    </ul>
+  </section>
+
+  <section id="competenze">
+    <h2>Competenze acquisite</h2>
+    <ul>
+      <li>Capacità di autoapprendimento e problem solving</li>
+      <li>Utilizzo avanzato dell’ambiente di sviluppo Eclipse</li>
+      <li>Creazione e gestione di finestre e componenti grafici in Java</li>
+      <li>Lettura e gestione degli input da tastiera</li>
+      <li>Costruzione di classi personalizzate e strutture dati</li>
+      <li>Programmazione multi-thread per gestire più processi in parallelo</li>
+      <li>Integrazione di risorse multimediali come immagini e suoni</li>
+      <li>Implementazione di algoritmi di pathfinding come l’A*</li>
+      <li>Esperienza in marketing e gestione imprenditoriale di un progetto</li>
+    </ul>
+  </section>
+
+  <section id="chisiamo">
+    <h2>Chi siamo</h2>
+    <div style="text-align: center; color: var(--accent); font-size: 1.5rem; margin-bottom: 20px;">C.E.O.</div>
+    <div class="profile-container">
+      <div class="profile-card">
+        <img src="profili/Mia_pfp.png" alt="Foto profilo 1">
+        <h3>Manuel Prati</h3>
+        <div class="title">C.E.O.</div>
+        <p>Sono un programmatore, videogiocatore e nerd fino al midollo.<br>"A guardarsi dietro nessuno è veramente felice"<br>-Sakata Gintoki</p>
+      </div>
+      <div class="profile-card">
+        <img src="profili/Ebr_pfp.png" alt="Foto profilo 2">
+        <h3>Lorenzo Ebraico</h3>
+        <div class="title">C.E.O.</div>
+        <p>Sono un programmatore, videogiocatore e appassionato di arrampicata sportiva <br>"La montagna più alta rimane dentro di noi"<br>-Walter Bonatti</p>
+      </div>
     </div>
-    <div class="profile-card">
-      <img src="profili/Ebr_pfp.png" alt="Lorenzo Ebraico">
-      <h3>Lorenzo Ebraico</h3>
-      <div class="title">C.E.O.</div>
-      <p>Sono un programmatore, videogiocatore e appassionato di arrampicata sportiva<br>"La montagna più alta rimane dentro di noi"<br>-Walter Bonatti</p>
-    </div>
-  </div>
-</section>
-<footer>
-  <p>&copy; 2025 Gioco 2D in Java - Tutti i diritti riservati</p>
-</footer>
-<script>
-// Script reveal & nav active
-</script>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Gioco 2D in Java - Tutti i diritti riservati</p>
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('nav a');
+
+    function revealOnScroll() {
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - window.innerHeight / 1.2;
+        if (window.scrollY > sectionTop) {
+          section.classList.add('visible');
+        }
+      });
+    }
+
+    function updateActiveLink() {
+      let index = sections.length;
+      while (--index && window.scrollY + 800 < sections[index].offsetTop) {}
+      navLinks.forEach(link => link.classList.remove('active'));
+      navLinks[index].classList.add('active');
+    }
+
+    window.addEventListener('scroll', () => {
+      revealOnScroll();
+      updateActiveLink();
+    });
+
+    revealOnScroll();
+    updateActiveLink();
+  </script>
 </body>
 </html>
